@@ -8,6 +8,10 @@ namespace PL
 {
     public class Alumno
     {
+        public static void GetAll()
+        {
+            BL.Alumno.GetAll();
+        }
         public static void Add()
         {
             Console.WriteLine("Ingrese la informacion del alumno");
@@ -23,7 +27,16 @@ namespace PL
             Console.WriteLine("Ingrese la fecha de nacimiento del alumno");
             alumno.FechaNacimiento = DateTime.Parse(Console.ReadLine());
 
-            BL.Alumno.Add(alumno);
+            ML.Result result = BL.Alumno.Add(alumno);
+
+            if (result.Correct)
+            {
+                Console.WriteLine("El registro fue exitoso");
+            }
+            else
+            {
+                Console.WriteLine("Ocurrio un error" + result.ErrorMessage);
+            }
         }
     }
 }
