@@ -83,18 +83,24 @@ namespace BL
 
                         using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                         {
+
                             DataTable tablaAlumno = new DataTable();
                             da.Fill(tablaAlumno);
-
                             if(tablaAlumno.Rows.Count > 0)
                             {
+                                result.Objects = new List<object>();
                                 foreach (DataRow row in tablaAlumno.Rows)
                                 {
                                     ML.Alumno alumno = new ML.Alumno();
                                     alumno.IdAlumno = int.Parse(row[0].ToString());
                                     alumno.Nombre = row[1].ToString();
+                                    
+                                    result.Objects.Add(alumno);
+                                    //Isac 
                                 }
+                                result.Correct = true;
                             }
+
                             else
                             {
                                 result.Correct = false;

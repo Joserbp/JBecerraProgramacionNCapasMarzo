@@ -10,7 +10,20 @@ namespace PL
     {
         public static void GetAll()
         {
-            BL.Alumno.GetAll();
+            ML.Result result = BL.Alumno.GetAll();
+            if (result.Correct)
+            {
+                foreach(ML.Alumno alumno in result.Objects)
+                {
+                    Console.WriteLine("El Id del alumno es: " + alumno.IdAlumno);
+                    Console.WriteLine("El nombre del alumno es: " + alumno.Nombre);
+                    Console.WriteLine("-------------------------------------");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ocurrio error" + result.ErrorMessage);
+            }
         }
         public static void Add()
         {
