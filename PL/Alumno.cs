@@ -11,6 +11,7 @@ namespace PL
         public static void GetAll()
         {
             ML.Result result = BL.Alumno.GetAll();
+            //ML.Result result = BL.Alumno.GetAllSP();
             if (result.Correct)
             {
                 foreach(ML.Alumno alumno in result.Objects)
@@ -39,8 +40,10 @@ namespace PL
             alumno.ApellidoMaterno = Console.ReadLine();
             Console.WriteLine("Ingrese la fecha de nacimiento del alumno");
             alumno.FechaNacimiento = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese el username del alumno");
+            alumno.UserName = Console.ReadLine();
 
-            ML.Result result = BL.Alumno.Add(alumno);
+            ML.Result result = BL.Alumno.AddEF(alumno);
 
             if (result.Correct)
             {
