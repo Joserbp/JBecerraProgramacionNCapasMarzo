@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PL
+namespace ML
 {
-    internal class Program
+    public class Semestre
     {
-        static void Main(string[] args)
-        {
-            PL.Alumno.GetAll();
-        }
+        public int IdSemestre { get; set; }
+        public string Nombre { get; set; }
     }
 }

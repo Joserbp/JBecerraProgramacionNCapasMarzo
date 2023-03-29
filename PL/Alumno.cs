@@ -10,7 +10,7 @@ namespace PL
     {
         public static void GetAll()
         {
-            ML.Result result = BL.Alumno.GetAll();
+            ML.Result result = BL.Alumno.GetAllEF();
             //ML.Result result = BL.Alumno.GetAllSP();
             if (result.Correct)
             {
@@ -18,6 +18,8 @@ namespace PL
                 {
                     Console.WriteLine("El Id del alumno es: " + alumno.IdAlumno);
                     Console.WriteLine("El nombre del alumno es: " + alumno.Nombre);
+                    // alumno.Semestre = new ML.Semestre(); Perder los datos que estaban asigandos
+                    Console.WriteLine("El Id del semestre es: " + alumno.Semestre.IdSemestre);
                     Console.WriteLine("-------------------------------------");
                 }
             }
@@ -42,6 +44,10 @@ namespace PL
             alumno.FechaNacimiento = DateTime.Parse(Console.ReadLine());
             Console.WriteLine("Ingrese el username del alumno");
             alumno.UserName = Console.ReadLine();
+            Console.WriteLine("Ingrese el Id del Semestre");
+            //ML.Semestre semestre = new ML.Semestre(); No tiene relación con el alumno
+            alumno.Semestre = new ML.Semestre();
+            alumno.Semestre.IdSemestre = int.Parse(Console.ReadLine());
 
             ML.Result result = BL.Alumno.AddEF(alumno);
 

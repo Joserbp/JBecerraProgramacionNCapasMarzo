@@ -120,10 +120,6 @@ namespace BL
             return result;
 
         }
-        public void GetById()
-        {
-
-        }
 
         public static ML.Result AddSP(ML.Alumno alumno)
         {
@@ -185,10 +181,104 @@ namespace BL
             {
                 using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
                 {
-                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.FechaNacimiento, alumno.UserName);
+                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.FechaNacimiento, alumno.UserName, alumno.Semestre.IdSemestre);
 
                     if(query > 0)
                     {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrio un error";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+
+        }
+
+        public static ML.Result GetAllEF()
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
+                {
+                    var alumnos = context.AlumnoGetAll().ToList();
+
+                    if (alumnos != null)
+                    {
+                        result.Objects = new List<object>();
+                        foreach (var alumnoObj in alumnos)
+                        {
+                            ML.Alumno alumno = new ML.Alumno();
+                            alumno.IdAlumno = alumnoObj.IdAlumno;
+                            alumno.Nombre = alumnoObj.Nombre;
+                            alumno.ApellidoPaterno = alumnoObj.ApellidoPaterno;
+                            alumno.ApellidoMaterno = alumnoObj.ApellidoMaterno;
+                            alumno.FechaNacimiento = alumnoObj.FechaNacimiento;
+                            alumno.UserName = alumnoObj.UserName;
+                            //Instancia de Semestre
+                                //ML.Semestre semestre = new ML.Semestre(); NO tiene relación con alumno
+                            alumno.Semestre = new ML.Semestre();
+                            alumno.Semestre.IdSemestre = alumnoObj.IdSemestre.Value; //Solo cuando estamos seguros que viene un valor
+                            result.Objects.Add(alumno);
+                        }
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrio un error";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+
+        }
+        public static ML.Result GetById(int IdAlumno)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
+                {
+                    var alumnoObj = context.AlumnoGetById(IdAlumno).Single();
+
+                    if (alumnoObj != null)
+                    {
+                        
+
+                            ML.Alumno alumno = new ML.Alumno();
+                            alumno.IdAlumno = alumnoObj.IdAlumno;
+                            alumno.Nombre = alumnoObj.Nombre;
+                            alumno.ApellidoPaterno = alumnoObj.ApellidoPaterno;
+                            alumno.ApellidoMaterno = alumnoObj.ApellidoMaterno;
+                            alumno.FechaNacimiento = alumnoObj.FechaNacimiento;
+                            alumno.UserName = alumnoObj.UserName;
+                            //Instancia de Semestre
+                            //ML.Semestre semestre = new ML.Semestre(); NO tiene relación con alumno
+                            alumno.Semestre = new ML.Semestre();
+                            //alumno.Semestre.IdSemestre = alumnoObj.IdSemestre; //Solo cuando estamos seguros que viene un valor
+
+                       
                         result.Correct = true;
                     }
                     else

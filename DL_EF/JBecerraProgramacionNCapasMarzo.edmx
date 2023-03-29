@@ -15,6 +15,7 @@
           <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
           <Property Name="FechaNacimiento" Type="date" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdSemestre" Type="int" />
         </EntityType>
         <Function Name="AlumnoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -22,6 +23,7 @@
           <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
           <Parameter Name="FechaNacimiento" Type="date" Mode="In" />
           <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="IdSemestre" Type="int" Mode="In" />
         </Function>
         <Function Name="AlumnoGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AlumnoGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -44,10 +46,10 @@
           <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdSemestre" Type="Int32" />
         </EntityType>
         <EntityContainer Name="JBecerraProgramacionNCapasMarzoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Alumnoes" EntityType="Self.Alumno" />
-          <FunctionImport Name="AlumnoGetAll" ReturnType="Collection(JBecerraProgramacionNCapasMarzoModel.AlumnoGetAll_Result)" />
           <FunctionImport Name="AlumnoGetById" ReturnType="Collection(JBecerraProgramacionNCapasMarzoModel.AlumnoGetById_Result)">
           <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -57,16 +59,10 @@
             <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
             <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
             <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="IdSemestre" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="AlumnoGetAll" ReturnType="Collection(JBecerraProgramacionNCapasMarzoModel.AlumnoGetAll_Result)" />
         </EntityContainer>
-        <ComplexType Name="AlumnoGetAll_Result">
-          <Property Type="Int32" Name="IdAlumno" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
-          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
-        </ComplexType>
         <ComplexType Name="AlumnoGetById_Result">
           <Property Type="Int32" Name="IdAlumno" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
@@ -74,6 +70,15 @@
           <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
           <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="AlumnoGetAll_Result">
+          <Property Type="Int32" Name="IdAlumno" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdSemestre" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -84,6 +89,7 @@
           <EntitySetMapping Name="Alumnoes">
             <EntityTypeMapping TypeName="JBecerraProgramacionNCapasMarzoModel.Alumno">
               <MappingFragment StoreEntitySet="Alumno">
+                <ScalarProperty Name="IdSemestre" ColumnName="IdSemestre" />
                 <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
@@ -93,18 +99,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AlumnoGetAll" FunctionName="JBecerraProgramacionNCapasMarzoModel.Store.AlumnoGetAll">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="JBecerraProgramacionNCapasMarzoModel.AlumnoGetAll_Result">
-                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
-                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AlumnoGetById" FunctionName="JBecerraProgramacionNCapasMarzoModel.Store.AlumnoGetById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="JBecerraProgramacionNCapasMarzoModel.AlumnoGetById_Result">
@@ -118,6 +112,19 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AlumnoAdd" FunctionName="JBecerraProgramacionNCapasMarzoModel.Store.AlumnoAdd" />
+          <FunctionImportMapping FunctionImportName="AlumnoGetAll" FunctionName="JBecerraProgramacionNCapasMarzoModel.Store.AlumnoGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JBecerraProgramacionNCapasMarzoModel.AlumnoGetAll_Result">
+                <ScalarProperty Name="IdAlumno" ColumnName="IdAlumno" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="IdSemestre" ColumnName="IdSemestre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -14,5 +14,8 @@ namespace ML
         public string ApellidoMaterno { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string UserName { get; set; }
+
+        //Propiedad de Navegación
+        public ML.Semestre Semestre { get; set; }
     }
 }
