@@ -12,7 +12,7 @@ namespace ML
         public string Nombre { get; set; }
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
-        public DateTime FechaNacimiento { get; set; }
+        public string FechaNacimiento { get; set; }
         public string UserName { get; set; }
 
         //Propiedad de Navegación

@@ -28,6 +28,7 @@ namespace DL_EF
         }
     
         public virtual DbSet<Alumno> Alumnoes { get; set; }
+        public virtual DbSet<Semestre> Semestres { get; set; }
     
         public virtual ObjectResult<AlumnoGetById_Result> AlumnoGetById(Nullable<int> idAlumno)
         {
@@ -38,7 +39,12 @@ namespace DL_EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AlumnoGetById_Result>("AlumnoGetById", idAlumnoParameter);
         }
     
-        public virtual int AlumnoAdd(string nombre, string apellidoPaterno, string apellidoMaterno, Nullable<System.DateTime> fechaNacimiento, string userName, Nullable<int> idSemestre)
+        public virtual ObjectResult<AlumnoGetAll_Result> AlumnoGetAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AlumnoGetAll_Result>("AlumnoGetAll");
+        }
+    
+        public virtual int AlumnoAdd(string nombre, string apellidoPaterno, string apellidoMaterno, string fechaNacimiento, string userName, Nullable<int> idSemestre)
         {
             var nombreParameter = nombre != null ?
                 new ObjectParameter("Nombre", nombre) :
@@ -52,9 +58,9 @@ namespace DL_EF
                 new ObjectParameter("ApellidoMaterno", apellidoMaterno) :
                 new ObjectParameter("ApellidoMaterno", typeof(string));
     
-            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
+            var fechaNacimientoParameter = fechaNacimiento != null ?
                 new ObjectParameter("FechaNacimiento", fechaNacimiento) :
-                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
+                new ObjectParameter("FechaNacimiento", typeof(string));
     
             var userNameParameter = userName != null ?
                 new ObjectParameter("UserName", userName) :
@@ -65,11 +71,6 @@ namespace DL_EF
                 new ObjectParameter("IdSemestre", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AlumnoAdd", nombreParameter, apellidoPaternoParameter, apellidoMaternoParameter, fechaNacimientoParameter, userNameParameter, idSemestreParameter);
-        }
-    
-        public virtual ObjectResult<AlumnoGetAll_Result> AlumnoGetAll()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AlumnoGetAll_Result>("AlumnoGetAll");
         }
     }
 }

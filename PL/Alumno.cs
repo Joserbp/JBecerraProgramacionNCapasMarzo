@@ -10,7 +10,8 @@ namespace PL
     {
         public static void GetAll()
         {
-            ML.Result result = BL.Alumno.GetAllEF();
+            ML.Result result = BL.Alumno.GetAllLINQ();
+            //ML.Result result = BL.Alumno.GetAllEF();
             //ML.Result result = BL.Alumno.GetAllSP();
             if (result.Correct)
             {
@@ -20,6 +21,8 @@ namespace PL
                     Console.WriteLine("El nombre del alumno es: " + alumno.Nombre);
                     // alumno.Semestre = new ML.Semestre(); Perder los datos que estaban asigandos
                     Console.WriteLine("El Id del semestre es: " + alumno.Semestre.IdSemestre);
+                    Console.WriteLine("El Semestre del alumno es: " + alumno.Semestre.Nombre);
+                    Console.WriteLine("Fecha de naciemito del alumno es: " + alumno.FechaNacimiento);
                     Console.WriteLine("-------------------------------------");
                 }
             }
@@ -41,7 +44,7 @@ namespace PL
             Console.WriteLine("Ingrese el Apellido Materno del alumno");
             alumno.ApellidoMaterno = Console.ReadLine();
             Console.WriteLine("Ingrese la fecha de nacimiento del alumno");
-            alumno.FechaNacimiento = DateTime.Parse(Console.ReadLine());
+            alumno.FechaNacimiento = Console.ReadLine();
             Console.WriteLine("Ingrese el username del alumno");
             alumno.UserName = Console.ReadLine();
             Console.WriteLine("Ingrese el Id del Semestre");
@@ -49,7 +52,8 @@ namespace PL
             alumno.Semestre = new ML.Semestre();
             alumno.Semestre.IdSemestre = int.Parse(Console.ReadLine());
 
-            ML.Result result = BL.Alumno.AddEF(alumno);
+            //ML.Result result = BL.Alumno.AddEF(alumno);
+            ML.Result result = BL.Alumno.AddLINQ(alumno);
 
             if (result.Correct)
             {

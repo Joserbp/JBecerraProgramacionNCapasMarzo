@@ -222,15 +222,16 @@ namespace BL
                         {
                             ML.Alumno alumno = new ML.Alumno();
                             alumno.IdAlumno = alumnoObj.IdAlumno;
-                            alumno.Nombre = alumnoObj.Nombre;
+                            alumno.Nombre = alumnoObj.NombreAlumno;
                             alumno.ApellidoPaterno = alumnoObj.ApellidoPaterno;
                             alumno.ApellidoMaterno = alumnoObj.ApellidoMaterno;
-                            alumno.FechaNacimiento = alumnoObj.FechaNacimiento;
+                            alumno.FechaNacimiento = alumnoObj.FechaNacimiento.ToString("dd-MM-yyyy"); 
                             alumno.UserName = alumnoObj.UserName;
                             //Instancia de Semestre
                                 //ML.Semestre semestre = new ML.Semestre(); NO tiene relación con alumno
                             alumno.Semestre = new ML.Semestre();
                             alumno.Semestre.IdSemestre = alumnoObj.IdSemestre.Value; //Solo cuando estamos seguros que viene un valor
+                            alumno.Semestre.Nombre = alumnoObj.NombreSemestre;
                             result.Objects.Add(alumno);
                         }
                         result.Correct = true;
@@ -271,7 +272,7 @@ namespace BL
                             alumno.Nombre = alumnoObj.Nombre;
                             alumno.ApellidoPaterno = alumnoObj.ApellidoPaterno;
                             alumno.ApellidoMaterno = alumnoObj.ApellidoMaterno;
-                            alumno.FechaNacimiento = alumnoObj.FechaNacimiento;
+                            //alumno.FechaNacimiento = alumnoObj.FechaNacimiento;
                             alumno.UserName = alumnoObj.UserName;
                             //Instancia de Semestre
                             //ML.Semestre semestre = new ML.Semestre(); NO tiene relación con alumno
@@ -298,5 +299,72 @@ namespace BL
             return result;
 
         }
+
+        public static ML.Result AddLINQ(ML.Alumno alumno)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
+                {
+                    DL_EF.Alumno alumnoLINQ = new DL_EF.Alumno();
+                    alumnoLINQ.Nombre = alumno.Nombre;
+                    alumnoLINQ.ApellidoPaterno = alumno.ApellidoPaterno;
+                    alumnoLINQ.ApellidoMaterno = alumno.ApellidoMaterno;
+                    alumnoLINQ.FechaNacimiento = DateTime.Parse(alumno.FechaNacimiento);  //DATETIME.PARSE   Tengo que usar el formato del sistema
+                                                                //DateParseExact para especificar el formato de la fecha ingresada
+                    alumnoLINQ.UserName = alumno.UserName;
+                    alumnoLINQ.IdSemestre = alumno.Semestre.IdSemestre;
+
+                    context.Alumnoes.Add(alumnoLINQ);
+
+                    int RowAffeted = context.SaveChanges();
+                    if (RowAffeted > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrio un error";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+
+        }
+
+        public static ML.Result GetAllLINQ()
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
+                {
+                    var alumnosLINQ = (from obj in context.Alumnoes select obj).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+
+        }
     }
+
+     
 }
