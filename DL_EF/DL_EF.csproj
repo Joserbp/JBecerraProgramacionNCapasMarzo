@@ -59,6 +59,9 @@
     <Compile Include="AlumnoGetById_Result.cs">
       <DependentUpon>JBecerraProgramacionNCapasMarzo.tt</DependentUpon>
     </Compile>
+    <Compile Include="DIreccion.cs">
+      <DependentUpon>JBecerraProgramacionNCapasMarzo.tt</DependentUpon>
+    </Compile>
     <Compile Include="JBecerraProgramacionNCapasMarzo.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

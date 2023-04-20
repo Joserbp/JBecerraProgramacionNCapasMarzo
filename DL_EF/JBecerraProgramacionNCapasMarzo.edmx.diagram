@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="JBecerraProgramacionNCapasMarzoModel.Alumno" Width="1.5" PointX="4.125" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="JBecerraProgramacionNCapasMarzoModel.Semestre" Width="1.5" PointX="0.75" PointY="1.125" />
         <AssociationConnector Association="JBecerraProgramacionNCapasMarzoModel.FK__Alumno__IdSemest__173876EA" />
+        <EntityTypeShape EntityType="JBecerraProgramacionNCapasMarzoModel.DIreccion" Width="1.5" PointX="6.375" PointY="1.125" />
+        <AssociationConnector Association="JBecerraProgramacionNCapasMarzoModel.FK__DIreccion__IdAlu__1A14E395" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

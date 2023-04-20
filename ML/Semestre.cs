@@ -10,5 +10,7 @@ namespace ML
     {
         public int IdSemestre { get; set; }
         public string Nombre { get; set; }
+
+        //public ML.Alumno alumno { get; set; }
     }
 }

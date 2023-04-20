@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 using System.Data.SqlClient; //Importar libreria
 using ML;
 using System.Data;
+using DL_EF;
 
 namespace BL
 {
@@ -181,7 +183,7 @@ namespace BL
             {
                 using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
                 {
-                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.FechaNacimiento, alumno.UserName, alumno.Semestre.IdSemestre);
+                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.FechaNacimiento, alumno.UserName, alumno.Semestre.IdSemestre,alumno.Direccion.Calle,alumno.Direccion.NumeroExterior,alumno.Direccion.NumeroInterior);
 
                     if(query > 0)
                     {
@@ -253,7 +255,7 @@ namespace BL
             return result;
 
         }
-        public static ML.Result GetById(int IdAlumno)
+        public static ML.Result GetByIdEF(int IdAlumno)
         {
             ML.Result result = new ML.Result();
 
@@ -269,7 +271,7 @@ namespace BL
 
                             ML.Alumno alumno = new ML.Alumno();
                             alumno.IdAlumno = alumnoObj.IdAlumno;
-                            alumno.Nombre = alumnoObj.Nombre;
+                            alumno.Nombre = alumnoObj.NombreAlumno;
                             alumno.ApellidoPaterno = alumnoObj.ApellidoPaterno;
                             alumno.ApellidoMaterno = alumnoObj.ApellidoMaterno;
                             //alumno.FechaNacimiento = alumnoObj.FechaNacimiento;
@@ -277,8 +279,10 @@ namespace BL
                             //Instancia de Semestre
                             //ML.Semestre semestre = new ML.Semestre(); NO tiene relación con alumno
                             alumno.Semestre = new ML.Semestre();
-                            //alumno.Semestre.IdSemestre = alumnoObj.IdSemestre; //Solo cuando estamos seguros que viene un valor
+                            alumno.Semestre.IdSemestre = alumnoObj.IdSemestre.Value; //Solo cuando estamos seguros que viene un valor
+                            alumno.Semestre.Nombre = alumnoObj.NombreSemestre; //Solo cuando estamos seguros que viene un valor
 
+                        result.Object = alumno;
                        
                         result.Correct = true;
                     }
@@ -299,7 +303,65 @@ namespace BL
             return result;
 
         }
+        public static ML.Result UpdateEF(ML.Alumno alumno)
+        {
+            ML.Result result = new ML.Result();
 
+            try
+            {
+                using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
+                {
+                    var RowAffected = context.AlumnoUpdate(alumno.IdAlumno,alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.FechaNacimiento, alumno.UserName, alumno.Semestre.IdSemestre);
+
+                    if (RowAffected > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrio un error";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+
+        }
+        public static ML.Result DeleteEF(int IdAlumno)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL_EF.JBecerraProgramacionNCapasMarzoEntities context = new DL_EF.JBecerraProgramacionNCapasMarzoEntities())
+                {
+                    var RowAffected = context.AlumnoDelete(IdAlumno);
+                    if (RowAffected > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrio un error";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+            return result;
+        }
         public static ML.Result AddLINQ(ML.Alumno alumno)
         {
             ML.Result result = new ML.Result();
@@ -312,8 +374,8 @@ namespace BL
                     alumnoLINQ.Nombre = alumno.Nombre;
                     alumnoLINQ.ApellidoPaterno = alumno.ApellidoPaterno;
                     alumnoLINQ.ApellidoMaterno = alumno.ApellidoMaterno;
-                    alumnoLINQ.FechaNacimiento = DateTime.Parse(alumno.FechaNacimiento);  //DATETIME.PARSE   Tengo que usar el formato del sistema
-                                                                //DateParseExact para especificar el formato de la fecha ingresada
+                    //alumnoLINQ.FechaNacimiento = DateTime.Parse(alumno.FechaNacimiento);  //DATETIME.PARSE   Tengo que usar el formato del sistema
+                    alumnoLINQ.FechaNacimiento = DateTime.ParseExact(alumno.FechaNacimiento, "dd-MM-yyyy", CultureInfo.InvariantCulture); //para especificar el formato de la fecha ingresada
                     alumnoLINQ.UserName = alumno.UserName;
                     alumnoLINQ.IdSemestre = alumno.Semestre.IdSemestre;
 

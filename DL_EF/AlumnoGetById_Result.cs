@@ -14,10 +14,12 @@ namespace DL_EF
     public partial class AlumnoGetById_Result
     {
         public int IdAlumno { get; set; }
-        public string Nombre { get; set; }
+        public string NombreAlumno { get; set; }
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
         public System.DateTime FechaNacimiento { get; set; }
         public string UserName { get; set; }
+        public Nullable<int> IdSemestre { get; set; }
+        public string NombreSemestre { get; set; }
     }
 }

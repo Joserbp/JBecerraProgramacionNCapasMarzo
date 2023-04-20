@@ -14,6 +14,12 @@ namespace DL_EF
     
     public partial class Alumno
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Alumno()
+        {
+            this.DIreccions = new HashSet<DIreccion>();
+        }
+    
         public int IdAlumno { get; set; }
         public string Nombre { get; set; }
         public string ApellidoPaterno { get; set; }
@@ -23,5 +29,7 @@ namespace DL_EF
         public Nullable<int> IdSemestre { get; set; }
     
         public virtual Semestre Semestre { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DIreccion> DIreccions { get; set; }
     }
 }

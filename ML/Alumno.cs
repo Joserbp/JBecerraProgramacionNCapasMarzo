@@ -17,5 +17,6 @@ namespace ML
 
         //Propiedad de Navegación
         public ML.Semestre Semestre { get; set; }
+        public ML.Direccion Direccion { get; set; }
     }
 }

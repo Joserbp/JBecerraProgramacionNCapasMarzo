@@ -10,6 +10,7 @@ namespace PL
     {
         public static void GetAll()
         {
+            ML.Semestre semestre = new ML.Semestre();
             ML.Result result = BL.Alumno.GetAllLINQ();
             //ML.Result result = BL.Alumno.GetAllEF();
             //ML.Result result = BL.Alumno.GetAllSP();
