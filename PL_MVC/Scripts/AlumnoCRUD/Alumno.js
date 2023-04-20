@@ -2,29 +2,42 @@
     GetAll();
 });
 
+function Elminar(IdAlumno) {
+
+    //CREAR PETCION AJAX para el ENDPOINT de DELETE
+    success: function(resul) {
+        alert(result.correct + "Producto elimnaod")
+    }
+
+    Error{
+        alert("ocurrio un error" + result.ErrorMessage)
+    }
+}
+
 function GetAll() {
     $.ajax({
         type: 'GET',
         url: 'http://localhost:58535/api/alumno/',
         success: function (result) { //200 OK 
-           // $('#SubCategorias tbody').empty();
             $.each(result.Objects, function (i, alumno) {
-             /*   var filas =
+                var filas =
                     '<tr>'
                     + '<td class="text-center"> '
-                    + '<a href="#" onclick="GetById(' + alumno.IdSubCategoria + ')">'
+                    + '<a href="#" onclick="GetById(' + alumno.IdAlumno + ')">'
                     + '<img  style="height: 25px; width: 25px;" src="../img/edit.ico" />'
                     + '</a> '
                     + '</td>'
-                    + "<td  id='id' class='text-center'>" + subCategoria.IdSubCategoria + "</td>"
-                    + "<td class='text-center'>" + subCategoria.Nombre + "</td>"
-                    + "<td class='text-center'>" + subCategoria.Descripcion + "</ td>"
-                    + "<td class='text-center'>" + subCategoria.Categoria.IdCategoria + "</td>"
+                    + "<td  id='id' class='text-center'>" + alumno.Nombre + "</td>"
+                    + "<td class='text-center'>" + alumno.ApellidoPaterno + "</td>"
+                    + "<td class='text-center'>" + alumno.ApellidoMaterno + "</ td>"
+                    + "<td class='text-center'>" + alumno.FechaNacimiento + "</td>"
+                    /*+ "<td class='text-center'>" + alumno.Semestre.idSemestre + "</td>"
+                    + "<td class='text-center'>" + alumno.Direccion.Colonia.Municipio.Estado.Pais.Nombre + "</td>"*/
                     //+ '<td class="text-center">  <a href="#" onclick="return Eliminar(' + subCategoria.IdSubCategoria + ')">' + '<img  style="height: 25px; width: 25px;" src="../img/delete.png" />' + '</a>    </td>'
-                    + '<td class="text-center"> <button class="btn btn-danger" onclick="Eliminar(' + subCategoria.IdSubCategoria + ')"><span class="glyphicon glyphicon-trash" style="color:#FFFFFF"></span></button></td>'
+                    + '<td class="text-center"> <button class="btn btn-danger" onclick="Eliminar(' + alumno.IdAlumno + ')"><span class="glyphicon glyphicon-trash" style="color:#FFFFFF"></span></button></td>'
 
                     + "</tr>";
-                $("#SubCategorias tbody").append(filas); */
+                $("#alumno tbody").append(filas); 
             });
         },
         error: function (result) {
