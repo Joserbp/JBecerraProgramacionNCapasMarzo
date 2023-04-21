@@ -2,28 +2,36 @@
     GetAll();
 });
 
-function Elminar(IdAlumno) {
+//function Elminar(IdAlumno) {
 
-    //CREAR PETCION AJAX para el ENDPOINT de DELETE
-    success: function(resul) {
-        alert(result.correct + "Producto elimnaod")
-    }
+//    //CREAR PETCION AJAX para el ENDPOINT de DELETE
+//    success: function(resul) {
+//        alert(result.correct + "Producto elimnaod")
+//    }
 
-    Error{
-        alert("ocurrio un error" + result.ErrorMessage)
-    }
+//    Error{
+//        alert("ocurrio un error" + result.ErrorMessage)
+//    }
+//}
+
+function showForm() {
+    $('#ModalUpdate').modal('show');
+    //Acceder al id Button Update Ocultar
+    //Acceder al id Button Add Mostrar
 }
+
 
 function GetAll() {
     $.ajax({
         type: 'GET',
         url: 'http://localhost:58535/api/alumno/',
         success: function (result) { //200 OK 
+            $("#alumno tbody").empty();
             $.each(result.Objects, function (i, alumno) {
                 var filas =
                     '<tr>'
                     + '<td class="text-center"> '
-                    + '<a href="#" onclick="GetById(' + alumno.IdAlumno + ')">'
+                    + '<a href="#" onclick="GetById('+ alumno.IdAlumno+')">'
                     + '<img  style="height: 25px; width: 25px;" src="../img/edit.ico" />'
                     + '</a> '
                     + '</td>'
@@ -45,3 +53,49 @@ function GetAll() {
         }
     });
 };
+
+function GetById(IdAlumno) {
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:58535/api/alumno/' + IdAlumno,
+        success: function (result) {
+            $('#txtIdAlumno').val(result.Object.IdAlumno);
+            $('#txtNombre').val(result.Object.Nombre);
+            $('#txtApellidoPaterno').val(result.Object.ApellidoPaterno);
+            $('#txtApellidoMaterno').val(result.Object.ApellidoMaterno);
+            $('#txtUserName').val(result.Object.UserName);
+            //Acceder al id Button Update Mostrar
+            //Acceder al id Button Add Ocultar
+            $('#ModalUpdate').modal('show');
+        },
+        error: function (result) {
+            alert('Error en la consulta.' + result.ErrorMessage);
+        }
+
+
+    });
+
+}
+
+function add() {
+    //Recuperar los datos de sus input
+    //Crear el JSON
+    //Mandarlo en la data
+    //Success
+        //Alert Agregado
+        //Actualizar la tabla GETALL()
+    type //POST
+}
+function Update() {
+    var idAlumno = $('#txtIdAlumno').val()
+    var alumno = {
+        IdAlumno: idAlumno
+    }
+
+    type //PUT
+    url
+    data = alumno
+    success(){
+
+    }
+}

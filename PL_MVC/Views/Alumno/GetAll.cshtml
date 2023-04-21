@@ -3,6 +3,10 @@
 <script type="text/javascript" src="~/Scripts/AlumnoCRUD/Alumno.js"></script>
 
 
+<div>
+    <button onclick="showForm()">Agregar</button>
+</div>
+
 <table class="table-bordered table-responsive" id="alumno">
     <tr>
         <td class="center-block">Actualizar</td>
@@ -14,10 +18,51 @@
         <td>Fecha Nacimiento</td>
         <td>Fecha Nacimiento</td>
         <td>Eliminar</td>
-        
+
     </tr>
-     <tbody>
-
-
-     </tbody>
+    <tbody>
+    </tbody>
 </table>
+
+<div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">Actualizar subcategoria</h4>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtIdAlumno" placeholder="IdSubCategoria" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtApellidoPaterno" placeholder="Descripcion" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtApellidoMaterno" placeholder="Categoria" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtFechaNacimiento" placeholder="Categoria" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtUserName" placeholder="Categoria" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="txtIdSemestre" placeholder="Categoria" />
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn glyphicon glyphicon-pencil" id="btnUpdate" onclick="Update()">Actualizar</button>
+                <button type="button" class="btn glyphicon glyphicon-pencil" id="btnAdd" onclick="Add()">Agregar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
