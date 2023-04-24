@@ -2,6 +2,32 @@
     GetAll();
 });
 
+function SoloLetras(e) {
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    // Patrón de entrada, en este caso solo acepta numeros y letras
+    patron = /[A-Za-z1]/;
+    tecla_final = String.fromCharCode(tecla);
+    //  IF
+    //Implementar algun detalle visual // Label que solo permite letras °°  Pintar el borde el input de rojo °° Pintar el borde de verde
+    return patron.test(tecla_final);
+}
+function SoloNumero(e) {
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    // Patrón de entrada, en este caso solo acepta numeros y letras
+    patron = /[0-9]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
+function Curp(e) {
+    tecla = (document.all) ? e.keyCode : e.which;
+
+    // Patrón de entrada, en este caso solo acepta numeros y letras
+    patron = /[A-Za-z1]/;
+    tecla_final = String.fromCharCode(tecla);
+    return patron.test(tecla_final);
+}
 //function Elminar(IdAlumno) {
 
 //    //CREAR PETCION AJAX para el ENDPOINT de DELETE
@@ -74,28 +100,27 @@ function GetById(IdAlumno) {
 
 
     });
-
 }
 
-function add() {
+//function add() {
     //Recuperar los datos de sus input
     //Crear el JSON
     //Mandarlo en la data
     //Success
         //Alert Agregado
         //Actualizar la tabla GETALL()
-    type //POST
-}
-function Update() {
-    var idAlumno = $('#txtIdAlumno').val()
-    var alumno = {
-        IdAlumno: idAlumno
-    }
+//   type //POST
+//}
+//function Update() {
+//    var idAlumno = $('#txtIdAlumno').val()
+//    var alumno = {
+//        IdAlumno: idAlumno
+//    }
 
-    type //PUT
-    url
-    data = alumno
-    success(){
+//    type //PUT
+//    url
+//    data = alumno
+//    success(){
 
-    }
-}
+//    }
+//}
